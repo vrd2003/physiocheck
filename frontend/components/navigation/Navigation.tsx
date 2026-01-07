@@ -59,7 +59,7 @@ export function Navigation() {
               />
             </div>
             <span className="text-xl font-bold text-slate-900">
-              Vital<span className="text-teal-600">Flow</span>
+              Physio<span className="text-teal-600">Check</span>
             </span>
           </Link>
 

@@ -143,7 +143,7 @@ export default function HomePage() {
               Ready to Transform Your Practice?
             </h2>
             <p className="text-xl text-slate-600 mb-8">
-              Join thousands of healthcare professionals using Vital Flow to deliver better patient outcomes.
+              Join thousands of healthcare professionals using PhysioCheck to deliver better patient outcomes.
             </p>
             <Link
               href="/auth/register"

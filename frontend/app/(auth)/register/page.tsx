@@ -59,7 +59,7 @@ export default function RegisterPage() {
             Check your email
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            We've sent a confirmation link to <strong>{email}</strong>
+            We`ve sent a confirmation link to <strong>{email}</strong>
           </p>
           <p className="mt-4 text-sm text-slate-500">
             Please check your inbox and click the link to verify your account.
@@ -107,7 +107,7 @@ export default function RegisterPage() {
             Create your account
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Start your journey with Vital Flow
+            Start your journey with PhysioCheck
           </p>
         </div>
 

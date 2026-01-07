@@ -283,8 +283,11 @@ export default function AssignExercisesPage() {
                             className="border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                             min="1"
                             max="10"
-                            value={assignmentDetails.sets}
-                            onChange={(e) => setAssignmentDetails({...assignmentDetails, sets: parseInt(e.target.value)})}
+                            value={assignmentDetails.sets || ''}
+                            onChange={(e) => {
+                                const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                setAssignmentDetails({...assignmentDetails, sets: isNaN(val) ? 0 : val})
+                            }}
                           />
                           <input
                             type="number"
@@ -292,8 +295,11 @@ export default function AssignExercisesPage() {
                             className="border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                             min="1"
                             max="50"
-                            value={assignmentDetails.reps}
-                            onChange={(e) => setAssignmentDetails({...assignmentDetails, reps: parseInt(e.target.value)})}
+                            value={assignmentDetails.reps || ''}
+                            onChange={(e) => {
+                                const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                setAssignmentDetails({...assignmentDetails, reps: isNaN(val) ? 0 : val})
+                            }}
                           />
                         </div>
                       </div>

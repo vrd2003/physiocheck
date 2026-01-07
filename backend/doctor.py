@@ -101,7 +101,16 @@ async def create_patient(payload: CreatePatientPayload, request: Request):
             doctor_db_id = doctor_res.data[0]["id"]
 
         # 1. Create auth user for patient
-        temp_password = secrets.token_urlsafe(12)
+        # Format: Name (first word, capitalized) + Last 4 digits of phone
+        try:
+            first_name = payload.full_name.split()[0].capitalize()
+            # Extract only digits from phone
+            phone_digits = "".join(filter(str.isdigit, payload.phone))
+            last_4 = phone_digits[-4:] if len(phone_digits) >= 4 else phone_digits.ljust(4, "0")
+            temp_password = f"{first_name}{last_4}"
+        except:
+            # Fallback if name/phone parsing fails
+            temp_password = secrets.token_urlsafe(8)
 
         try:
             auth_res = supabase.auth.sign_up({
@@ -140,11 +149,14 @@ async def create_patient(payload: CreatePatientPayload, request: Request):
         }
 
         try:
+            print(f"Inserting into patients table: {patient_data}")
             patient_res = supabase.from_("patients").insert(patient_data).execute()
             
             if not patient_res.data:
-                raise Exception("Failed to insert patient record")
+                print("Insert returned no data")
+                raise Exception("Failed to insert patient record - no data returned")
                 
+            print(f"Patient inserted successfully: {patient_res.data}")    
         except Exception as e:
             # Rollback: delete the auth user
             try:
@@ -190,8 +202,10 @@ PhysioCheck Team
     except HTTPException:
         raise
     except Exception as e:
+        import traceback
         print(f"Create patient failed: {e}")
-        raise HTTPException(status_code=500, detail="Failed to create patient")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Failed to create patient: {str(e)}")
 
 @router.get("/patients")
 async def list_patients(request: Request):

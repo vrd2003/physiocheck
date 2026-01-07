@@ -53,7 +53,7 @@ export function PhysioAnimation() {
       {/* Header */}
       <div className="text-center mb-6 sm:mb-8">
         <h3 className="text-lg sm:text-xl font-semibold text-slate-900 mb-1">
-          How VitalFlow Works
+          How PhysioCheck Works
         </h3>
         <p className="text-sm text-slate-600">
           Simple, effective rehabilitation in 4 steps

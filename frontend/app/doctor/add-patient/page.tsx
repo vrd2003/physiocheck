@@ -142,7 +142,7 @@ export default function AddPatientPage() {
     try {
       // Generate a random password for the patient
       const generatePassword = () => {
-        const length = 12
+        const length = 8
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
         let password = ""
         for (let i = 0; i < length; i++) {
@@ -176,6 +176,7 @@ export default function AddPatientPage() {
         router.push('/doctor/patients')
       }, 2000)
       
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
        // eslint-disable-next-line no-console
       console.error('Error adding patient:', error)
