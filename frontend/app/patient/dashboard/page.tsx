@@ -57,7 +57,7 @@ export default function PatientDashboard() {
       // Filter exercises due today (mock logic: all active exercises are "due" for demo)
       const upcoming = exercisesRes.data.map((ex: any) => ({
         id: ex.exercise_id || ex.id, // Use FK exercise_id if available (assigned_exercise table)
-        name: ex.exercises?.title || ex.exercise_name || 'Unknown Exercise',
+        name: ex.exercises?.name || ex.exercise_name || 'Unknown Exercise', // Fixed: use 'name' instead of 'title'
         description: ex.exercises?.description || ex.exercise_description || '',
         difficulty: ex.exercises?.difficulty || 'beginner',
         duration: ex.exercises?.duration_minutes || 15,

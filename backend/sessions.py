@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 from database import supabase
+from websocket import manager
 
 router = APIRouter(prefix="/sessions", tags=["Sessions"])
 
@@ -77,7 +78,7 @@ def create_session(payload: CreateSessionPayload, request: Request):
         raise HTTPException(500, f"Failed to create exercise session: {str(e)}")
 
 @router.patch("/{session_id}")
-def update_session(session_id: str, payload: dict, request: Request):
+async def update_session(session_id: str, payload: dict, request: Request):
     """Update an existing exercise session"""
     try:
         user = request.state.user
@@ -125,6 +126,14 @@ def update_session(session_id: str, payload: dict, request: Request):
         
         if not result.data:
             raise Exception("Failed to update session")
+        
+        # Notify doctor if session is updated
+        await manager.signal_to_doctor(patient_id, {
+            "type": "session_update",
+            "session_id": session_id,
+            "status": update_data.get("status"),
+            "data": result.data[0]
+        })
         
         return result.data[0]
         

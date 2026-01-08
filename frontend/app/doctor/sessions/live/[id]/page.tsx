@@ -100,11 +100,11 @@ export default function LiveSessionPage() {
     };
   }, [id]);
 
-  const hasProcessedAnswer = useRef(false);
+  // const hasProcessedAnswer = useRef(false);
 
   const startCall = async () => {
       try {
-          hasProcessedAnswer.current = false; // Reset state for new call
+          // hasProcessedAnswer.current = false; // Reset state for new call
           const localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
           setStream(localStream);
           
@@ -143,13 +143,7 @@ export default function LiveSessionPage() {
       console.log("DEBUG: Received signal", message.data.type);
       if (peerRef.current) {
           try {
-              if (message.data.type === 'answer') {
-                  if (hasProcessedAnswer.current) {
-                      console.warn("DEBUG: Ignoring duplicate answer signal");
-                      return;
-                  }
-                  hasProcessedAnswer.current = true;
-              }
+              // Simply pass all signals to the peer instance
               peerRef.current.signal(message.data);
           } catch (err) {
               console.error("DEBUG: Failed to signal peer:", err);
@@ -162,7 +156,7 @@ export default function LiveSessionPage() {
           peerRef.current.destroy();
           peerRef.current = null;
       }
-      hasProcessedAnswer.current = false;
+      // hasProcessedAnswer.current = false;
       if (stream) {
           stream.getTracks().forEach(track => track.stop());
           setStream(null);

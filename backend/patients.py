@@ -22,9 +22,10 @@ def my_exercises(request: Request):
             .execute()
         
         if exercises.data:
-            print("Debugging my_exercises: First item:", exercises.data[0])
-            for ex in exercises.data:
-                print(f"AssignID: {ex.get('id')} -> ExerciseID: {ex.get('exercise_id')}")
+            # print("Debugging my_exercises: First item:", exercises.data[0])
+            # for ex in exercises.data:
+            #     print(f"AssignID: {ex.get('id')} -> ExerciseID: {ex.get('exercise_id')}")
+            pass
 
         return exercises.data or []
     except HTTPException:
